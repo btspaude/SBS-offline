@@ -97,9 +97,23 @@ namespace SBSData {
     if( edge == 0 ) { // Leading edge
       hit->le.raw = val;
       hit->le.val = (val-fTDC.offset)*fTDC.cal;
+      // EJB kluge to fix reference time:
+      if (elemID == 2696) {
+      	if (hit->le.raw < 48000) {
+	    hit->le.raw = 48400;
+	    hit->le.val = (hit->le.raw-fTDC.offset)*fTDC.cal;
+      	}
+      }
     } else {
       hit->te.raw = val;
       hit->te.val = (val-fTDC.offset)*fTDC.cal;
+      // EJB kluge to fix reference time:
+      if (elemID == 2696) {
+      	if (hit->te.raw > 151500) {
+	    hit->te.raw = 150100;
+	    hit->te.val = (hit->te.raw-fTDC.offset)*fTDC.cal;
+      	}
+      }
     }
     if(fEdgeIdx[0] == fEdgeIdx[1]) { // Both leading and trailing edges now found
       hit->ToT.raw = hit->te.raw - hit->le.raw;
@@ -107,8 +121,12 @@ namespace SBSData {
     }
     if(fEdgeIdx[1] > fEdgeIdx[0]) fEdgeIdx[0] = fEdgeIdx[1]; // if TE found first force LE count to increase
     fHasData = true;
+
     if (hit->le.raw > 0 && hit->te.raw > 0 && hit->ToT.raw ==0) hit->ToT.raw = hit->te.raw - hit->le.raw;
-	if (elemID == 2696) std::cout << " tdc process " << val << " " << edge  << " ftdc hits size = " <<fTDC.hits.size() << " hits in edge "  << fEdgeIdx[edge]<< " tdc LE " << hit->le.raw << " tdc TE " << hit->te.raw << " tdc TOT " << hit->ToT.raw << std::endl;
+    if (hit->le.val > 0 && hit->te.val > 0 && hit->ToT.val ==0) hit->ToT.val = hit->te.val - hit->le.val;
+    
+	  if (elemID == 2696) std::cout << " tdc process " << val << " " << edge  << " ftdc hits size = " <<fTDC.hits.size() << " hits in edge "  << fEdgeIdx[edge]<< " tdc LE " << hit->le.raw << " tdc TE " << hit->te.raw << " tdc TOT " << hit->ToT.raw << std::endl;
+    if (elemID == 2696) std::cout << " tdc process " << val << " " << edge  << " ftdc hits size = " <<fTDC.hits.size() << " hits in edge "  << fEdgeIdx[edge]<< " tdc LE val " << hit->le.val << " tdc TE val " << hit->te.val << " tdc TOT val" << hit->ToT.val << std::endl;
   }
 
   void TDC::Clear()

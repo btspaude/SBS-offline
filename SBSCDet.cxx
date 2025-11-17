@@ -22,9 +22,9 @@ SBSCDet::SBSCDet( const char* name, const char* description,
 
   fHits             = new TClonesArray("SBSCDet_Hit",200);
   fHit_tmin 	    = 100;
-  fHit_tmax	    = 10000; // 10ns to 30ns  units of TDC are 10's of picoseconds?
+  fHit_tmax	    = 10000; // 1ns to 100ns  units of TDC are 10's of picoseconds?
   fHit_totmin 	    = 100;
-  fHit_totmax	    = 10000; // 10ns to 30ns  units of TDC are 10's of picoseconds?
+  fHit_totmax	    = 10000; // 1ns to 100ns  units of TDC are 10's of picoseconds?
 
   Clear();
 }
