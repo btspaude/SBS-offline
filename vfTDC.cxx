@@ -209,27 +209,28 @@ namespace Decoder {
 	
 	tdc_data.status = slot_data->loadData("tdc", tdc_data.chan, tdc_data.raw, tdc_data.opt);
 
+  
   // ==========================
-    // DEBUG PRINT FOR PIXEL 469
+    // DEBUG PRINT FOR PIXEL 469 // 7/10/2026 BS Debugging CDet
     // ==========================
-    const Int_t DEBUG_SLOT = 5;     // pixel 469 maps to slot 5
-    const Int_t DEBUG_CHAN = 117;   // pixel 469 maps to channel 117
+    // const Int_t DEBUG_SLOT = 5;     // pixel 469 maps to slot 5
+    // const Int_t DEBUG_CHAN = 117;   // pixel 469 maps to channel 117
 
-    static UInt_t last_printed_trig = 0xffffffffu;
+    // static UInt_t last_printed_trig = 0xffffffffu;
 
-    if( tdc_data.ev_hdr_slno == DEBUG_SLOT &&
-        tdc_data.chan == DEBUG_CHAN &&
-        static_cast<UInt_t>(tdc_data.evh_trig_num) != last_printed_trig ) {
+    // if( tdc_data.ev_hdr_slno == DEBUG_SLOT &&
+    //     tdc_data.chan == DEBUG_CHAN &&
+    //     static_cast<UInt_t>(tdc_data.evh_trig_num) != last_printed_trig ) {
 
-        std::cout << "\n========== PIXEL 469 FIRED =========="
-                  << " event/trig = " << tdc_data.evh_trig_num
-                  << "  slot = " << tdc_data.ev_hdr_slno
-                  << "  chan = " << tdc_data.chan
-                  << " ====================================="
-                  << std::endl;
+    //     std::cout << "\n========== PIXEL 469 FIRED =========="
+    //               << " event/trig = " << tdc_data.evh_trig_num
+    //               << "  slot = " << tdc_data.ev_hdr_slno
+    //               << "  chan = " << tdc_data.chan
+    //               << " ====================================="
+    //               << std::endl;
 
-        last_printed_trig = static_cast<UInt_t>(tdc_data.evh_trig_num);
-    }
+    //     last_printed_trig = static_cast<UInt_t>(tdc_data.evh_trig_num);
+    // }
 
 #ifdef WITH_DEBUG
 	if (fDebugFile)
